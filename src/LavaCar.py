@@ -1098,6 +1098,7 @@ inicio.title("LavaCar")
 inicio.eval("tk::PlaceWindow . center")
 inicio.columnconfigure(0, weight = 1)
 inicio.rowconfigure(0, weight = 1)
+inicio.attributes('-fullscreen', True)
 
 #Widget Menu
 menu_inicio = Menu(inicio)
@@ -1109,6 +1110,7 @@ lavacar_menu.add_command(label = "Cliente", command = mostrar_ventana_cliente)
 lavacar_menu.add_command(label = "Vehiculo", command = mostrar_ventana_vehiculo)
 lavacar_menu.add_command(label = "Servicio", command = mostrar_ventana_servicio)
 lavacar_menu.add_command(label = "Establecimiento", command = mostrar_ventana_establecimiento)
+lavacar_menu.add_command(label = "Salir", command = exit)
 
 bg_color = "#cecece"
 pyglet.font.add_file("fonts/Ubuntu-Bold.ttf")
