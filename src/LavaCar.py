@@ -146,7 +146,7 @@ def mostrar_ventana_Inicio():
         ).grid(row = 0, column = 0, columnspan = 4)
 
     #Widget Logo Lava Carros
-    logo_image = ImageTk.PhotoImage(file = "icons/LavacarIcon1.png")
+    logo_image = ImageTk.PhotoImage(file = "imgs/LavacarIcon.png")
     logo_widget = tk.Label(ventana_inicio, image = logo_image, bg = bg_color)
     logo_widget.image = logo_image
     logo_widget.grid(row = 1, column = 0, columnspan = 4)

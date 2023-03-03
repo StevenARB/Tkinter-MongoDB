@@ -9,8 +9,13 @@ root.geometry('925x500+300+200')
 root.configure(bg = "#fff")
 root.resizable(False, False)
 
-def open_file():
+def open_lavacar_file():
+    root.destroy()
     call(["python", "src/LavaCar.py"])
+
+def open_signup_file():
+    root.destroy()
+    call(["python", "src/SignUp.py"])
 
 def signin():
     username = user.get()
@@ -18,13 +23,12 @@ def signin():
 
     if username == 'Admin' and password == '123':
         print('Inicio de Sesión Correcto')
-        root.destroy()
-        open_file()
+        open_lavacar_file()
         
 
 
 #Imagen Login
-img = PhotoImage(file = 'icons/login.png')
+img = PhotoImage(file = 'imgs/login.png')
 Label(root, image = img, bg = 'white').place(x = 50, y = 50)
 
 frame = Frame(root, width = 350, height = 350, bg = "white")
@@ -39,8 +43,7 @@ def on_enter(e):
     user.delete(0, 'end')
  
 def on_leave(e):
-    name = user.get()
-    if name == '':
+    if user.get() == '':
         user.insert(0, 'Usuario')
 
 #Entry Usuario
@@ -57,8 +60,7 @@ def on_enter(e):
     passw.delete(0, 'end')
  
 def on_leave(e):
-    name = passw.get()
-    if name == '':
+    if passw.get() == '':
         passw.insert(0, 'Contraseña')
 
 #Entry Contraseña
@@ -76,7 +78,7 @@ Button(frame, width = 39, pady = 7, text = 'Iniciar Sesión', bg = '#57a1f8', fg
 label = Label(frame, text = "¿No tiene una cuenta?", fg = 'black', bg = 'white', font = ('Microsoft YaHei UI Light', 9))
 label.place(x = 75, y = 270)
 
-sign_up = Button(frame, width = 8, text = 'Registrarse', border = 0, bg = 'white', cursor = 'hand2', fg = '#57a1f8')
+sign_up = Button(frame, width = 8, text = 'Registrarse', border = 0, bg = 'white', cursor = 'hand2', fg = '#57a1f8', command = open_signup_file)
 sign_up.place(x = 215, y = 270)
 
 
