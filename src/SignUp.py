@@ -1,5 +1,6 @@
 from tkinter import*
 from tkinter import messagebox
+from subprocess import call
 import pymongo
 
 MONGO_DATABASE = "Lavacar"
@@ -23,6 +24,10 @@ root.geometry('925x500+300+200')
 root.configure(bg = "#fff")
 root.resizable(False, False)
 
+def open_login_file():
+    root.destroy()
+    call(["python", "src/Login.py"])
+
 def existe_usuario(username):
     existe = None
     try:
@@ -45,14 +50,15 @@ def registrar_usuario(username, password):
             "Password": password}
         collection_usuario.insert_one(documento)
         messagebox.showinfo(message = "Se ha Registrado Correctamente")
-        user.delete(0, 'end')
-        passw.delete(0, 'end')
-        confirmpassw.delete(0, 'end')
-        user.insert(0, 'Usuario')
-        passw.config(show = '')
-        passw.insert(0, 'Contraseña')
-        confirmpassw.config(show = '')
-        confirmpassw.insert(0, 'Confirmar Contraseña')
+        open_login_file()
+        #user.delete(0, 'end')
+        #passw.delete(0, 'end')
+        #confirmpassw.delete(0, 'end')
+        #user.insert(0, 'Usuario')
+        #passw.config(show = '')
+        #passw.insert(0, 'Contraseña')
+        #confirmpassw.config(show = '')
+        #confirmpassw.insert(0, 'Confirmar Contraseña')
     except pymongo.errors.ConnectionFailure as error:
         print(error)
 
@@ -159,7 +165,7 @@ Button(frame, width = 39, pady = 7, text = 'Registrarse', bg = '#57a1f8', fg = '
 label = Label(frame, text = "Tengo una cuenta", fg = 'black', bg = 'white', font = ('Microsoft YaHei UI Light', 9))
 label.place(x = 75, y = 340)
 
-login = Button(frame, width = 9, text = 'Iniciar Sesión', border = 0, bg = 'white', cursor = 'hand2', fg = '#57a1f8')
+login = Button(frame, width = 9, text = 'Iniciar Sesión', border = 0, bg = 'white', cursor = 'hand2', fg = '#57a1f8', command = open_login_file)
 login.place(x = 215, y = 340)
 
 root.mainloop()

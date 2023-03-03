@@ -1,6 +1,21 @@
 from tkinter import*
 from tkinter import messagebox
 from subprocess import call
+import pymongo
+
+MONGO_DATABASE = "Lavacar"
+MONGO_COLLECTION = "Usuario"
+
+MONGO_HOST = "localhost"
+MONGO_PORT = "27017"
+MONGO_TIMEOUT = 1000
+
+#Base de Datos Local
+mongo_uri = "mongodb://"+MONGO_HOST+":"+MONGO_PORT
+
+client = pymongo.MongoClient(mongo_uri,serverSelectionTimeoutMS=MONGO_TIMEOUT)
+database = client[MONGO_DATABASE]
+collection_usuario = database[MONGO_COLLECTION]
 
 #Ventana
 root = Tk()
@@ -8,6 +23,21 @@ root.title('Login')
 root.geometry('925x500+300+200')
 root.configure(bg = "#fff")
 root.resizable(False, False)
+
+def validar_usuario(username, password):
+    valida = False
+    try:
+        for documento in collection_usuario.find():
+            if username == documento["Username"] and password == documento["Password"]:
+                valida = True
+            client.close()
+        return valida
+    except pymongo.errors.ServerSelectionTimeoutError as errorTiempo:
+        print("Tiempo Excedido "+errorTiempo)
+    except pymongo.errors.ConnectionFailure as error:
+        print("Fallo de Conexión con la Base de Datos "+error)
+    except KeyError:
+        None
 
 def open_lavacar_file():
     root.destroy()
@@ -21,11 +51,12 @@ def signin():
     username = user.get()
     password = passw.get()
 
-    if username == 'Admin' and password == '123':
-        print('Inicio de Sesión Correcto')
+    if validar_usuario(username, password) == True:
+        messagebox.showinfo(message = "Inicio de Sesión Correcto")
         open_lavacar_file()
-        
-
+    
+    else:
+        messagebox.showwarning(message = "El Usuario o la Contraseña no son correctos")
 
 #Imagen Login
 img = PhotoImage(file = 'imgs/login.png')
@@ -40,7 +71,11 @@ heading.place(x = 75, y = 5)
 
 ###################------------------------------------------------------------####################
 def on_enter(e):
-    user.delete(0, 'end')
+    username = ''
+    for i in user.get():
+        username = username + i
+    if username == 'Usuario':
+        user.delete(0, 'end')
  
 def on_leave(e):
     if user.get() == '':
@@ -57,10 +92,16 @@ Frame(frame, width = 295, height = 2, bg = 'black').place(x = 30, y = 107)
 
 ###################------------------------------------------------------------####################
 def on_enter(e):
-    passw.delete(0, 'end')
+    password = ''
+    for i in passw.get():
+        password = password + i
+    if password == 'Contraseña':
+        passw.delete(0, 'end')
+        passw.config(show = '*')
  
 def on_leave(e):
     if passw.get() == '':
+        passw.config(show = '')
         passw.insert(0, 'Contraseña')
 
 #Entry Contraseña
