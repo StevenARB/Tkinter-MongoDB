@@ -1,7 +1,7 @@
+import pymongo
 from tkinter import*
 from tkinter import messagebox
 from subprocess import call
-import pymongo
 
 MONGO_DATABASE = "Lavacar"
 MONGO_COLLECTION = "Usuario"
@@ -69,7 +69,7 @@ frame.place(x = 480, y = 70)
 heading = Label(frame, text = 'Iniciar Sesión', fg = '#57a1f8', bg = 'white', font = ('Microsoft YaHei UI Light', 23, 'bold'))
 heading.place(x = 75, y = 5)
 
-###################------------------------------------------------------------####################
+###################################################################################################
 def on_enter(e):
     username = ''
     for i in user.get():
@@ -90,7 +90,7 @@ user.bind('<FocusOut>', on_leave)
 
 Frame(frame, width = 295, height = 2, bg = 'black').place(x = 30, y = 107)
 
-###################------------------------------------------------------------####################
+###################################################################################################
 def on_enter(e):
     password = ''
     for i in passw.get():

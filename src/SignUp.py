@@ -1,7 +1,7 @@
+import pymongo
 from tkinter import*
 from tkinter import messagebox
 from subprocess import call
-import pymongo
 
 MONGO_DATABASE = "Lavacar"
 MONGO_COLLECTION = "Usuario"

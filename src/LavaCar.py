@@ -1,10 +1,12 @@
 import pymongo
 import tkinter as tk
 import pyglet
+import time
 from tkinter import*
 from tkinter import ttk
 from tkinter import messagebox
 from PIL import ImageTk
+from subprocess import call
 
 MONGO_DATABASE = "Lavacar"
 MONGO_COLLECTION1 = "Cliente"
@@ -47,6 +49,8 @@ def mostrar_ventana_Inicio():
     ventana_inicio.tkraise()
     ventana_inicio.pack_propagate(False)
 
+###################################################################################################
+    start = time.time_ns()
     def ingresos_totales():
         global cuenta_total
         cuenta_total = 0.0
@@ -88,7 +92,8 @@ def mostrar_ventana_Inicio():
             print("Fallo de Conexión con la Base de Datos "+error)
         except KeyError:
             None
-        
+        end = time.time()
+        print(end - start)
         #Widget Label Texto Ingresos Totales
         tk.Label(
             ventana_inicio, 
@@ -155,6 +160,7 @@ def mostrar_ventana_Inicio():
     vehiculo_atendido()
     gasto_litros()
 
+###################################################################################################    
 def mostrar_ventana_cliente():
     def mostrar_datos():
         global id_ultimo
@@ -386,6 +392,7 @@ def mostrar_ventana_cliente():
     #Mostrar los Datos de la Colección Cliente
     mostrar_datos()
 
+###################################################################################################    
 def mostrar_ventana_vehiculo():
     def mostrar_datos():
         global id_ultimo
@@ -645,6 +652,7 @@ def mostrar_ventana_vehiculo():
     #Mostrar los Datos de la Colección Vehiculo
     mostrar_datos()
 
+###################################################################################################    
 def mostrar_ventana_servicio():
     def mostrar_datos():
         global id_ultimo
@@ -876,6 +884,7 @@ def mostrar_ventana_servicio():
     #Mostrar los Datos de la Colección Servicio
     mostrar_datos()
 
+###################################################################################################    
 def mostrar_ventana_establecimiento():
     def mostrar_datos():
         global id_ultimo
@@ -1092,7 +1101,12 @@ def mostrar_ventana_establecimiento():
 
     #Mostrar los Datos de la Colección Establecimiento
     mostrar_datos()
-    
+
+def open_factura_file():
+    inicio.destroy()
+    call(["python", "src/Factura.py"])
+
+###################################################################################################       
 inicio = Tk()
 inicio.title("LavaCar")
 inicio.eval("tk::PlaceWindow . center")
@@ -1110,6 +1124,7 @@ lavacar_menu.add_command(label = "Cliente", command = mostrar_ventana_cliente)
 lavacar_menu.add_command(label = "Vehiculo", command = mostrar_ventana_vehiculo)
 lavacar_menu.add_command(label = "Servicio", command = mostrar_ventana_servicio)
 lavacar_menu.add_command(label = "Establecimiento", command = mostrar_ventana_establecimiento)
+lavacar_menu.add_command(label = "Facturación", command = open_factura_file)
 lavacar_menu.add_command(label = "Salir", command = exit)
 
 bg_color = "#cecece"
